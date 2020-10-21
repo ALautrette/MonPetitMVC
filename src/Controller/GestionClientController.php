@@ -10,6 +10,7 @@ namespace APP\Controller;
 
 use ReflectionClass;
 use APP\Modele\GestionClientModele;
+use APP\Entity\Client;
 
 /**
  * Description of GestionClientController
@@ -33,6 +34,9 @@ class GestionClientController {
     }
     
     public function chercheTous() : void {
-        
+        $modele = new GestionClientModele();
+        $clients = $modele->findAll();               
+        $r = new ReflectionClass($this);
+        include_once PATH_VIEW . str_replace('Controller', 'View', $r->getShortName()) . "/plusieursClients.php";                
     }
 }

@@ -6,39 +6,39 @@
  * and open the template in the editor.
  */
 
-/**
- * Description of GestionClientModele
- *
- * @author lautrette.antoine
- */
 namespace APP\Modele;
 
+use APP\Entity\Commande;
 use Tools\Connexion;
 use PDO;
-use APP\Entity\Client;
 
-class GestionClientModele {
+/**
+ * Description of GestionCommandeModele
+ *
+ * @author user
+ */
+class GestionCommandeModele {
     //put your code here
     
-    public function find(string $id) : Client{
+    public function find(string $id) : Commande{
         
         $unObjetPdo = Connexion::getConnexion();
-        $sql = "select * from CLIENT where id=:id";
+        $sql = "select * from COMMANDE where id=:id";
         $ligne = $unObjetPdo->prepare($sql);
         $ligne->bindValue(':id', $id, PDO::PARAM_INT);
         $ligne->execute();
         
-        return $ligne->fetchObject(Client::class);
+        return $ligne->fetchObject(Commande::class);
     }
     
     public function findAll() : array{
         
         $unObjetPdo = Connexion::getConnexion();
-        $sql = "select * from CLIENT";
+        $sql = "select * from COMMANDE";
         $res = $unObjetPdo->prepare($sql);
         $res->execute();
         
-        return $res->fetchAll(PDO::FETCH_CLASS, Client::class);
+        return $res->fetchAll(PDO::FETCH_CLASS, Commande::class);
         
-    }       
+    } 
 }

@@ -7,6 +7,10 @@
  */
 
 include_once PATH_VIEW . "header.html";
-//var_dump($unClient);
-echo "Nom du client : " . $unClient->getNomCli();
+echo "Nombre de clients trouvés : " . count($clients) . "<br>";
+foreach ($clients as $client) {
+    echo "<br>" . $client->getId() . " " . $client->getTitreCli() . " " 
+            . $client->getPrenomCli() . " " 
+            . $client->getNomCli();
+}
 include_once PATH_VIEW . "footer.html";
