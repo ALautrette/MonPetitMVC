@@ -11,6 +11,8 @@ namespace APP\Controller;
 use ReflectionClass;
 use APP\Modele\GestionClientModele;
 use APP\Entity\Client;
+use Tools\MyTwig;
+use Exception;
 
 /**
  * Description of GestionClientController
@@ -27,9 +29,11 @@ class GestionClientController {
         $unClient = $modele->find($id);
         if($unClient){
             $r = new ReflectionClass($this);
-            include_once PATH_VIEW . str_replace('Controller', 'View', $r->getShortName()) . "/unClient.php";           
+            $vue = str_replace('Controller', 'View', 
+                    $r->getShortName()) . "/unClient.html.twig";
+            MyTwig::afficheVue($vue, array('unClient' => $unClient));
         } else {
-            throw new Exception("Client " . $id . "inconnu");
+            throw new Exception("Client " . $id . " inconnu");
         }
     }
     
@@ -37,6 +41,12 @@ class GestionClientController {
         $modele = new GestionClientModele();
         $clients = $modele->findAll();               
         $r = new ReflectionClass($this);
-        include_once PATH_VIEW . str_replace('Controller', 'View', $r->getShortName()) . "/plusieursClients.php";                
+        $vue = str_replace('Controller', 'View', $r->getShortName()) . "/tousClients.html.twig"; 
+        MyTwig::afficheVue($vue, array('clients' => $clients));                
+    }
+    
+    public function creerClient() : void{
+        $vue = "GestionClientView\\creerClient.html.twig";
+        MyTwig::afficheVue($vue, array());
     }
 }

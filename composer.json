@@ -7,7 +7,9 @@
             "email": "antoine.lautrette@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "twig/twig": "v2.4.6"
+    },
     
     "autoload" :{
         "psr-4": {
