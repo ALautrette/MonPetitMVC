@@ -8,6 +8,9 @@
 
 namespace APP\Controller;
 
+use ReflectionClass;
+use APP\Modele\GestionClientModele;
+
 /**
  * Description of GestionClientController
  *
@@ -16,16 +19,20 @@ namespace APP\Controller;
 class GestionClientController {
     //put your code here
     
-    public function chercheUn(array $params){
+    public function chercheUn(array $params) : void{
         
-        $modele = new \APP\Modele\GestionClientModele();
+        $modele = new GestionClientModele();
         $id = filter_var(intval($params["id"]), FILTER_VALIDATE_INT);
         $unClient = $modele->find($id);
         if($unClient){
-            $r = new \ReflectionClass($this);
+            $r = new ReflectionClass($this);
             include_once PATH_VIEW . str_replace('Controller', 'View', $r->getShortName()) . "/unClient.php";           
         } else {
             throw new Exception("Client " . $id . "inconnu");
         }
+    }
+    
+    public function chercheTous() : void {
+        
     }
 }
