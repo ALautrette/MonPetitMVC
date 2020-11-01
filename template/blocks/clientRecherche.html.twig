@@ -1,0 +1,12 @@
+{% block recherche %}
+    <h3>Recherche</h3>
+    <div class="form-group">            
+        <label for="id">Id du client</label>
+        <select class="form-control" id="id" name="id">
+            <option>-- Choisir --</option>
+            {% for id in lesId %}
+                <option>{{ id['id'] }}</option>
+            {% endfor %}
+        </select>
+    </div>               
+{% endblock %}

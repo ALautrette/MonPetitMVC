@@ -13,10 +13,13 @@
  */
 namespace APP\Controller;
 
+use Tools\MyTwig;
+
 class IdentificationController {
     //put your code here
     
     public function login(): void {
-        echo "oh yeah";
+        $vue = "GestionClientView\\filtreClients.html.twig";
+        MyTwig::afficheVue($vue, array());
     }
 }

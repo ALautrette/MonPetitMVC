@@ -47,8 +47,8 @@ class Repository {
     }
     
     public function find($id) : object{
-        $sql = "select * from " . $this->table;
-        $ligne = $this->connexion->query($sql);
+        $sql = "select * from " . $this->table . " where id=:id";
+        $ligne = $this->connexion->prepare($sql);
         $ligne->bindValue(':id', $id, PDO::PARAM_INT);
         $ligne->execute();
         
@@ -116,6 +116,7 @@ class Repository {
             }
             
             $lignes = $this->connexion->prepare($sql);
+            var_dump($methode);
             $lignes->execute($params);
             $lignes->setFetchMode(PDO::FETCH_CLASS, $this->classeNameLong, null);
             return $lignes->fetchAll();
@@ -133,7 +134,7 @@ class Repository {
     public function findBy(array $params) : array{
         $element = "Choisir...";
         while(in_array($element, $params)){
-            unset($params[array_search($element, $params)]);
+            unset($params[array_search($element, $params)]);   
         }
         $cles = array_keys($params);
         $methode = "findBy";
@@ -144,5 +145,44 @@ class Repository {
             $methode .= $cles[$i];
         }
         return $this->traiteFindBy($methode, array_values($params));
+    }
+    
+    public function modifieTable(object $objet) : void{
+        $tobjet = $this->object2Array($objet);
+        $parametres = array();
+        $sql = "update " . $this->table . " set ";
+        foreach($tobjet as $cle => $valeur){
+            if($cle != "id"){
+                if($this->gereNull($valeur)){
+                    $sql .= $cle . "= null ,";
+                } else{
+                    $sql .= $cle . "= :" . $cle . " ,";
+                    $parametres[$cle] = $valeur;
+                }
+            }
+        }
+        $sql = substr($sql, 0, -1) . " where id =" . $tobjet['id'];
+        $req = $this->connexion->prepare($sql);
+        $req->execute($parametres);
+    }
+    
+    private function gereNull(?string $variable) : bool{
+        $retour = false;
+        if ($variable == '_null_' || $variable == "0"){
+            $retour = true;
+        }
+        return $retour;
+    }
+    
+    public function object2Array(object $objet) : array{
+        $tObjet = (array)$objet;
+        $tabloRetour = array();
+        foreach($tObjet as $cle => $valeur){
+            $cle = str_replace("\0", "", $cle);
+            $cle = str_replace($this->classeNameLong, "", $cle);
+            $tabloRetour[$cle] = $valeur;
+        }
+        
+        return$tabloRetour;
     }
 }

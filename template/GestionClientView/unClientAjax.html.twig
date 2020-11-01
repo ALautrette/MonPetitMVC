@@ -1,1 +1,26 @@
-{# empty Twig template #}
+{% extends "layout.html.twig" %}
+{% block contenu %}
+    {% block recherche %}
+        <h3>Recherche</h3>
+        <div class="container">
+            <form action="?c=GestionClient&a=chercheUn" method="post">
+                {{ include('blocks/clientRecherche.html.twig') }}
+                <input type="submit" value="Voir" class="btn btn-default">
+            </form>
+        </div>
+    {% endblock %}
+
+    <div id="retour">
+        {% block retour %}            
+            {{ include('/blocks/singleClient.html.twig') }}
+        {% endblock %}
+    </div>
+
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+    Fin de l'affichage
+    <script type="text/javascript" src="assets/js/GestionClient/clientsFunctions.js"></script>
+    <script type="text/javascript" src="assets/js/creationXHR.js"></script>  
+{% endblock %}
+
