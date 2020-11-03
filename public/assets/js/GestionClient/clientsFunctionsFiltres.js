@@ -21,8 +21,8 @@ function filtrerClient()
         xhr.open("post", "/?c=gestionClient&a=rechercheClientsAjax", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         let parametres = "titreCli=" + document.getElementById("titres").value;
-        parametres += "&villeCli" + document.getElementById("titres").value;
-        parametres += "&cpCli" + document.getElementById("cps").value;
+        parametres += "&villeCli=" + document.getElementById("villes").value;
+        parametres += "&cpCli=" + document.getElementById("cps").value;
         xhr.send(parametres);
     }
 }

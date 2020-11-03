@@ -177,7 +177,7 @@ class GestionClientController {
             }
             if(count($params) > 0){
                 $clients = $repository->findBy($params);
-                $paramsVue['lesClients'] = $clients;
+                $paramsVue['clients'] = $clients;
                 $vue = "blocks/arrayClients.html.twig";
             }
         }

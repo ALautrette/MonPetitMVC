@@ -116,7 +116,6 @@ class Repository {
             }
             
             $lignes = $this->connexion->prepare($sql);
-            var_dump($methode);
             $lignes->execute($params);
             $lignes->setFetchMode(PDO::FETCH_CLASS, $this->classeNameLong, null);
             return $lignes->fetchAll();
